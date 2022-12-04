@@ -7,15 +7,16 @@ def get_input_txt() -> List[str]:
     with open(rpsfile, "r") as f:
         return f.readlines()
 
-points = {"R": 1, "P": 2, "S": 3}
-    
-beating_conditions = {"R": "S", "P": "R", "S": "P"}
-
-#converting me and opponent to typical R,P,S
-convert = {"A": "R", "B": "P", "C": "S", 
-           "X":"R", "Y": "P", "Z": "S"}
 
 def part_one():
+
+    my_choice_points = {"R": 1, "P": 2, "S": 3}
+
+    beating_conditions = {"R": "S", "P": "R", "S": "P"}
+
+    #converting me and opponent to typical R,P,S
+    convert = {"A": "R", "B": "P", "C": "S", 
+               "X":"R", "Y": "P", "Z": "S"}
 
     games = get_input_txt()
 
@@ -31,7 +32,7 @@ def part_one():
         me = game[1]
 
         #I pick R, P, or S
-        score += points[me]
+        score += my_choice_points[me]
         
         #tie
         if them == me:

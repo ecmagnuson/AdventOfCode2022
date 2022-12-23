@@ -13,18 +13,18 @@ import java.util.regex.Pattern;
 public class Day5 {
 
     private static List<Stack<Character>> reverseStacks(List<Stack<Character>> stacks) {
-	List<Stack<Character>> reverseStacks = new ArrayList<>();
+	List<Stack<Character>> reversedStacks = new ArrayList<>();
 	for (int i = 0; i < 10; i++) {
-	    reverseStacks.add(new Stack<Character>());
+	    reversedStacks.add(new Stack<Character>());
 	}
 
 	for (int i = 0; i < stacks.size(); i++) {
 	    while (!stacks.get(i).empty()) {
 		Character c = stacks.get(i).pop();
-		reverseStacks.get(i).push(c);
+		reversedStacks.get(i).push(c);
 	    }
 	}
-	return reverseStacks;
+	return reversedStacks;
     }
 
     protected static List<Stack<Character>> parseStacks(String[] lines) {
@@ -73,7 +73,7 @@ public class Day5 {
 	System.out.println(message); // GRTSWNJHH
     }
 
-    // part1
+    // part2
     protected static void moveStacks2(String instructions, List<Stack<Character>> stacks) {
 	String[] instructionsList = instructions.split("\n");
 
@@ -88,10 +88,6 @@ public class Day5 {
 
 		Stack<Character> tempStack = new Stack<>();
 
-		// There is a bug in here somewhere
-		// This is the right idea but it is the wrong answer
-		// No idea right now...
-		// I've tested this works and puts things in original order
 		while (numToMove != 0) {
 		    if (stacks.get(from).empty()) {
 			break;
@@ -102,15 +98,16 @@ public class Day5 {
 		while (!tempStack.empty()) {
 		    stacks.get(to).push(tempStack.pop());
 		}
-		
-
 	    }
 	}
+	
 	String message = "";
 	for (Stack<Character> stack : stacks) {
-	    if (!stack.empty()) {
+	    try {
 		message += stack.peek();
-	    }
+	    } catch (EmptyStackException e) {
+		continue;
+	    }	 	    
 	}
 	System.out.println(message); //
     }
@@ -123,8 +120,9 @@ public class Day5 {
 	String[] parts = input.split("\n\n");
 	String[] lines = parts[0].split("\n");
 
-	List<Stack<Character>> stacks = parseStacks(lines);
+	List<Stack<Character>> stacks = parseStacks(lines); //GRTSWNJHH
 	moveStacks1(parts[1], stacks);
-	moveStacks2(parts[1], stacks);
+	List<Stack<Character>> stacks2 = parseStacks(lines); //QLFQDBBHM
+	moveStacks2(parts[1], stacks2);
     }
 }
